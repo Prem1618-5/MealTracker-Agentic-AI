@@ -101,3 +101,4 @@ $("helpButton").addEventListener("click", () => helpDialog.showModal());
 $("closeHelp").addEventListener("click", () => helpDialog.close());
 helpDialog.addEventListener("click", event => { if (event.target === helpDialog) helpDialog.close(); });
 loadState(); chatInput.focus();
+$("themeButton").addEventListener("click", () => { const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark"; document.documentElement.dataset.theme = next; try { localStorage.setItem("theme", next); } catch (_) {} });

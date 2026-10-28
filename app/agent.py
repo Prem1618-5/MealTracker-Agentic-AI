@@ -3,9 +3,9 @@ import re
 import time
 from typing import Any, Generator
 
-from groq import Groq
+from openai import OpenAI
 
-from .config import GROQ_API_KEY, GROQ_MODEL, MAX_AGENT_STEPS
+from .config import LLM_API_KEY, LLM_BASE_URL, LLM_MODEL, MAX_AGENT_STEPS
 from .memory import memory_store
 from .tools import (
     add_meal,
@@ -16,10 +16,10 @@ from .tools import (
 
 
 # ============================================================
-# GROQ CLIENT
+# LLM CLIENT (Groq or Gemini via OpenAI-compatible endpoint)
 # ============================================================
 
-client = Groq(api_key=GROQ_API_KEY)
+client = OpenAI(api_key=LLM_API_KEY, base_url=LLM_BASE_URL)
 
 
 # ============================================================
@@ -626,7 +626,7 @@ class MealCalorieAgent:
 
     def __init__(self):
         self.client = client
-        self.model = GROQ_MODEL
+        self.model = LLM_MODEL
 
     # ========================================================
     # MEMORY
@@ -823,7 +823,7 @@ class MealCalorieAgent:
                 yield ("done", {
                     "answer": (
                         "I couldn't connect to the AI agent. "
-                        "Please check your Groq API configuration."
+                        "Please check your LLM API key/provider configuration."
                     ),
                     "trace": trace,
                     "cards": [],
